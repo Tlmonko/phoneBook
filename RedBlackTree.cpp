@@ -259,3 +259,17 @@ void RedBlackTree<T, P>::replaceNode(Node<T, P> *firstNode, Node<T, P> *secondNo
     }
     secondNode->parent = firstNode->parent;
 }
+
+template<typename T, typename P>
+P RedBlackTree<T, P>::get(T key) {
+    Node<T, P> *node = root;
+    while (node->value != key) {
+        if (!node)
+            throw std::runtime_error("Node not found");
+        if (node->value < key)
+            node = node->rightChild;
+        else
+            node = node->leftChild;
+    }
+    return node->payload;
+}

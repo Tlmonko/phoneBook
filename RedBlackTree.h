@@ -29,6 +29,8 @@ public:
 
     void remove(T value);
 
+    P get(T key);
+
 private:
     void balanceInsertion(Node<T, P> *node);
 

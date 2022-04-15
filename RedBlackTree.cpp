@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "RedBlackTree.h"
 
 template<typename T, typename P>
@@ -139,6 +140,8 @@ void RedBlackTree<T, P>::remove(T value) {
     Node<T, P> *node = root;
     Node<T, P> *balanceNode;
     while (node->value != value) {
+        if (!node)
+            throw std::runtime_error("Node not found");
         if (node->value < value)
             node = node->rightChild;
         else

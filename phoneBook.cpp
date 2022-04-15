@@ -20,4 +20,19 @@ void phoneBook::addContact(Contact contact) {
     namesBook->add(hashedPhone, contact);
 }
 
+void phoneBook::removeContact(ContactField key) {
+    size_t hashedKey = std::hash<std::string>{}(key.value);
+    switch (key.field) {
+        case ContactField::PHONE:
+            phoneNumbersBook->remove(hashedKey);
+            break;
+        case ContactField::EMAIL:
+            emailsBook->remove(hashedKey);
+            break;
+        case ContactField::NAME:
+            namesBook->remove(hashedKey);
+            break;
+    }
+}
+
 

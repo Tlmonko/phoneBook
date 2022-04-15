@@ -12,6 +12,15 @@ struct Contact {
     std::string name;
 };
 
+struct ContactField {
+    enum {
+        PHONE,
+        EMAIL,
+        NAME
+    } field;
+    std::string value;
+};
+
 class phoneBook {
 private:
     RedBlackTree<size_t, Contact> *phoneNumbersBook;
@@ -22,9 +31,9 @@ public:
 
     void addContact(Contact contact);
 
-    void removeContact(Contact contact);
+    void removeContact(ContactField key);
 
-    void updateContact(Contact newContact);
+    void updateContact(ContactField key, ContactField updateField);
 };
 
 

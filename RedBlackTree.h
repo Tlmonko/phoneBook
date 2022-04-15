@@ -25,11 +25,9 @@ public:
 
     RedBlackTree() = default;;
 
-    void add(T value);
+    void add(T value, P payload);
 
     void remove(T value);
-
-    void print(Node<T, P> *node, int blackHeight);
 
 private:
     void balanceInsertion(Node<T, P> *node);

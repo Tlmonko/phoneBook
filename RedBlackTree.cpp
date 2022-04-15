@@ -1,8 +1,7 @@
-#include <iostream>
 #include "RedBlackTree.h"
 
 template<typename T, typename P>
-void RedBlackTree<T, P>::add(T value) {
+void RedBlackTree<T, P>::add(T value, P payload) {
     if (!root) {
         root = new Node<T, P>(false, value);
         root->leftChild = new Node<T, P>(root);
@@ -10,7 +9,7 @@ void RedBlackTree<T, P>::add(T value) {
         return;
     }
     Node<T, P> *node = root;
-    Node<T, P> *newNode = new Node<T, P>(true, value);
+    Node<T, P> *newNode = new Node<T, P>(true, value, payload);
     newNode->leftChild = new Node<T, P>(newNode);
     newNode->rightChild = new Node<T, P>(newNode);
     while (node->leftChild != nullptr && node->rightChild != nullptr) {
@@ -256,16 +255,4 @@ void RedBlackTree<T, P>::replaceNode(Node<T, P> *firstNode, Node<T, P> *secondNo
         firstNode->parent->rightChild = secondNode;
     }
     secondNode->parent = firstNode->parent;
-}
-
-template<typename T, typename P>
-void RedBlackTree<T, P>::print(Node<T, P> *node, int blackHeight) {
-    if (!node->leftChild && !node->rightChild)
-        return;
-    int blackHeightAddition = 0;
-    if (node->isRed == false)
-        blackHeightAddition = 1;
-    print(node->leftChild, blackHeight + blackHeightAddition);
-    std::cout << node->value << " (" << blackHeight + blackHeightAddition << ')' << std::endl;
-    print(node->rightChild, blackHeight + blackHeightAddition);
 }

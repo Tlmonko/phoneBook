@@ -3,4 +3,4 @@ project(phoneBook)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(phoneBook main.cpp RedBlackTree.cpp RedBlackTree.h)
+add_executable(phoneBook main.cpp RedBlackTree.cpp RedBlackTree.h phoneBook.cpp phoneBook.h)

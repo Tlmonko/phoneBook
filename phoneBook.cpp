@@ -35,4 +35,41 @@ void phoneBook::removeContact(ContactField key) {
     }
 }
 
+Contact phoneBook::getContact(ContactField key) {
+    Contact contact;
+    size_t hashedKey = std::hash<std::string>{}(key.value);
+    switch (key.field) {
+        case ContactField::PHONE:
+            contact = phoneNumbersBook->get(hashedKey);
+            break;
+        case ContactField::EMAIL:
+            contact = emailsBook->get(hashedKey);
+            break;
+        case ContactField::NAME:
+            contact = namesBook->get(hashedKey);
+            break;
+    }
+    return contact;
+}
+
+void phoneBook::updateContact(ContactField key, ContactField updateField) {
+    Contact contact = getContact(key);
+    removeContact(key);
+
+    switch (updateField.field) {
+        case ContactField::PHONE:
+            contact.phoneNumber = updateField.value;
+            break;
+        case ContactField::EMAIL:
+            contact.email = updateField.value;
+            break;
+        case ContactField::NAME:
+            contact.name = updateField.value;
+            break;
+    }
+
+    addContact(contact);
+}
+
+
 

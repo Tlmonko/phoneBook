@@ -34,6 +34,8 @@ public:
     void removeContact(ContactField key);
 
     void updateContact(ContactField key, ContactField updateField);
+
+    Contact getContact(ContactField key);
 };
 
 

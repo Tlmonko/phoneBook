@@ -141,12 +141,12 @@ void RedBlackTree<T, P>::remove(T value) {
     Node<T, P> *node = root;
     Node<T, P> *balanceNode;
     while (node->value != value) {
-        if (!node)
-            throw std::runtime_error("Node not found");
         if (node->value < value)
             node = node->rightChild;
         else
             node = node->leftChild;
+        if (!node)
+            throw std::runtime_error("Node not found");
     }
 
     bool nodeOriginalIsRed = node->isRed;
@@ -265,12 +265,12 @@ template<typename T, typename P>
 P RedBlackTree<T, P>::get(T key) {
     Node<T, P> *node = root;
     while (node->value != key) {
-        if (!node)
-            throw std::runtime_error("Node not found");
         if (node->value < key)
             node = node->rightChild;
         else
             node = node->leftChild;
+        if (!node)
+            throw std::runtime_error("Node not found");
     }
     return node->payload;
 }

@@ -1,18 +1,18 @@
 #include <iostream>
 #include "RedBlackTree.h"
 
-template<typename T>
-void RedBlackTree<T>::add(T value) {
+template<typename T, typename P>
+void RedBlackTree<T, P>::add(T value) {
     if (!root) {
-        root = new Node<T>(false, value);
-        root->leftChild = new Node<T>(root);
-        root->rightChild = new Node<T>(root);
+        root = new Node<T, P>(false, value);
+        root->leftChild = new Node<T, P>(root);
+        root->rightChild = new Node<T, P>(root);
         return;
     }
-    Node<T> *node = root;
-    Node<T> *newNode = new Node<T>(true, value);
-    newNode->leftChild = new Node<T>(newNode);
-    newNode->rightChild = new Node<T>(newNode);
+    Node<T, P> *node = root;
+    Node<T, P> *newNode = new Node<T, P>(true, value);
+    newNode->leftChild = new Node<T, P>(newNode);
+    newNode->rightChild = new Node<T, P>(newNode);
     while (node->leftChild != nullptr && node->rightChild != nullptr) {
         if (node->value > value)
             node = node->leftChild;
@@ -27,16 +27,16 @@ void RedBlackTree<T>::add(T value) {
     balanceInsertion(newNode);
 }
 
-template<typename T>
-void RedBlackTree<T>::balanceInsertion(Node<T> *node) {
+template<typename T, typename P>
+void RedBlackTree<T, P>::balanceInsertion(Node<T, P> *node) {
     if (node == this->root) {
         node->isRed = false;
         return;
     }
 
     while (node->parent && node->parent->isRed) {
-        Node<T> *uncle = getUncle(node);
-        Node<T> *grandFather = getGrandFather(node);
+        Node<T, P> *uncle = getUncle(node);
+        Node<T, P> *grandFather = getGrandFather(node);
         if (isFatherLeftChild(node)) {
             if (uncle->isRed) {
                 node->parent->isRed = false;
@@ -72,26 +72,26 @@ void RedBlackTree<T>::balanceInsertion(Node<T> *node) {
     root->isRed = false;
 }
 
-template<typename T>
-Node<T> *RedBlackTree<T>::getUncle(Node<T> *node) {
+template<typename T, typename P>
+Node<T, P> *RedBlackTree<T, P>::getUncle(Node<T, P> *node) {
     if (isFatherLeftChild(node))
         return node->parent->parent->rightChild;
     return node->parent->parent->leftChild;
 }
 
-template<typename T>
-bool RedBlackTree<T>::isFatherLeftChild(Node<T> *node) {
+template<typename T, typename P>
+bool RedBlackTree<T, P>::isFatherLeftChild(Node<T, P> *node) {
     return node->parent == node->parent->parent->leftChild;
 }
 
-template<typename T>
-Node<T> *RedBlackTree<T>::getGrandFather(Node<T> *node) {
+template<typename T, typename P>
+Node<T, P> *RedBlackTree<T, P>::getGrandFather(Node<T, P> *node) {
     return node->parent->parent;
 }
 
-template<typename T>
-void RedBlackTree<T>::leftRotate(Node<T> *node) {
-    Node<T> *pivot = node->rightChild;
+template<typename T, typename P>
+void RedBlackTree<T, P>::leftRotate(Node<T, P> *node) {
+    Node<T, P> *pivot = node->rightChild;
 
     pivot->parent = node->parent;
 
@@ -112,9 +112,9 @@ void RedBlackTree<T>::leftRotate(Node<T> *node) {
     pivot->leftChild = node;
 }
 
-template<typename T>
-void RedBlackTree<T>::rightRotate(Node<T> *node) {
-    Node<T> *pivot = node->leftChild;
+template<typename T, typename P>
+void RedBlackTree<T, P>::rightRotate(Node<T, P> *node) {
+    Node<T, P> *pivot = node->leftChild;
 
     pivot->parent = node->parent;
 
@@ -135,10 +135,10 @@ void RedBlackTree<T>::rightRotate(Node<T> *node) {
     pivot->rightChild = node;
 }
 
-template<typename T>
-void RedBlackTree<T>::remove(T value) {
-    Node<T> *node = root;
-    Node<T> *balanceNode;
+template<typename T, typename P>
+void RedBlackTree<T, P>::remove(T value) {
+    Node<T, P> *node = root;
+    Node<T, P> *balanceNode;
     while (node->value != value) {
         if (node->value < value)
             node = node->rightChild;
@@ -154,9 +154,9 @@ void RedBlackTree<T>::remove(T value) {
             return;
         } else {
             if (node == node->parent->leftChild)
-                node->parent->leftChild = new Node<T>(node->parent);
+                node->parent->leftChild = new Node<T, P>(node->parent);
             else
-                node->parent->rightChild = new Node<T>(node->parent);
+                node->parent->rightChild = new Node<T, P>(node->parent);
             return;
         }
     }
@@ -168,7 +168,7 @@ void RedBlackTree<T>::remove(T value) {
         balanceNode = node->leftChild;
         replaceNode(node, node->leftChild);
     } else {
-        Node<T> *nextNode = node->rightChild;
+        Node<T, P> *nextNode = node->rightChild;
         while (nextNode->leftChild->leftChild)
             nextNode = nextNode->leftChild;
         balanceNode = nextNode->rightChild;
@@ -190,11 +190,11 @@ void RedBlackTree<T>::remove(T value) {
     }
 }
 
-template<typename T>
-void RedBlackTree<T>::balanceRemoving(Node<T> *node) {
+template<typename T, typename P>
+void RedBlackTree<T, P>::balanceRemoving(Node<T, P> *node) {
     while (node->isRed == false && node != root) {
         if (node == node->parent->leftChild) {
-            Node<T> *brother = node->parent->rightChild;
+            Node<T, P> *brother = node->parent->rightChild;
             if (brother->isRed) {
                 brother->isRed = false;
                 node->parent->isRed = true;
@@ -218,7 +218,7 @@ void RedBlackTree<T>::balanceRemoving(Node<T> *node) {
                 node = root;
             }
         } else {
-            Node<T> *brother = node->parent->leftChild;
+            Node<T, P> *brother = node->parent->leftChild;
             if (brother->isRed) {
                 brother->isRed = false;
                 node->parent->isRed = true;
@@ -246,8 +246,8 @@ void RedBlackTree<T>::balanceRemoving(Node<T> *node) {
     root->isRed = false;
 }
 
-template<typename T>
-void RedBlackTree<T>::replaceNode(Node<T> *firstNode, Node<T> *secondNode) {
+template<typename T, typename P>
+void RedBlackTree<T, P>::replaceNode(Node<T, P> *firstNode, Node<T, P> *secondNode) {
     if (firstNode->parent == nullptr) {
         root = secondNode;
     } else if (firstNode == firstNode->parent->leftChild) {
@@ -258,8 +258,8 @@ void RedBlackTree<T>::replaceNode(Node<T> *firstNode, Node<T> *secondNode) {
     secondNode->parent = firstNode->parent;
 }
 
-template<typename T>
-void RedBlackTree<T>::print(Node<T> *node, int blackHeight) {
+template<typename T, typename P>
+void RedBlackTree<T, P>::print(Node<T, P> *node, int blackHeight) {
     if (!node->leftChild && !node->rightChild)
         return;
     int blackHeightAddition = 0;

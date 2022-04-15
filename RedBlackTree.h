@@ -1,24 +1,27 @@
 #ifndef REDBLACKTREE_REDBLACKTREE_H
 #define REDBLACKTREE_REDBLACKTREE_H
 
-template<typename T>
+template<typename T, typename P>
 class Node {
 public:
-    Node<T> *parent = nullptr;
-    Node<T> *leftChild = nullptr;
-    Node<T> *rightChild = nullptr;
+    Node<T, P> *parent = nullptr;
+    Node<T, P> *leftChild = nullptr;
+    Node<T, P> *rightChild = nullptr;
     bool isRed = false;
     T value;
+    P payload;
 
-    Node(bool isRed, T value) : isRed(isRed), value(value) {};
-    Node(Node<T> *parent) : parent(parent) {};
+    Node(bool isRed, T value, P payload) : isRed(isRed), value(value), payload(payload) {};
+
+    Node(Node<T, P> *parent) : parent(parent) {};
+
     Node() = default;
 };
 
-template<typename T>
+template<typename T, typename P>
 class RedBlackTree {
 public:
-    Node<T> *root = nullptr;
+    Node<T, P> *root = nullptr;
 
     RedBlackTree() = default;;
 
@@ -26,24 +29,24 @@ public:
 
     void remove(T value);
 
-    void print(Node<T> *node, int blackHeight);
+    void print(Node<T, P> *node, int blackHeight);
 
 private:
-    void balanceInsertion(Node<T> *node);
+    void balanceInsertion(Node<T, P> *node);
 
-    void balanceRemoving(Node<T> *node);
+    void balanceRemoving(Node<T, P> *node);
 
-    Node<T> *getUncle(Node<T> *node);
+    Node<T, P> *getUncle(Node<T, P> *node);
 
-    Node<T> *getGrandFather(Node<T> *node);
+    Node<T, P> *getGrandFather(Node<T, P> *node);
 
-    bool isFatherLeftChild(Node<T> *node);
+    bool isFatherLeftChild(Node<T, P> *node);
 
-    void leftRotate(Node<T> *node);
+    void leftRotate(Node<T, P> *node);
 
-    void rightRotate(Node<T> *node);
+    void rightRotate(Node<T, P> *node);
 
-    void replaceNode(Node<T> *firstNode, Node<T> *secondNode);
+    void replaceNode(Node<T, P> *firstNode, Node<T, P> *secondNode);
 };
 
 

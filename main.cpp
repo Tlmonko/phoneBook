@@ -1,3 +1,7 @@
+#include "phoneBook.h"
+
 int main() {
-    return 0;
+    phoneBook book;
+    book.addContact({"89222222222", "me@ya.ru", "me"});
+    book.print();
 }

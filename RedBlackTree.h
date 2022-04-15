@@ -31,6 +31,8 @@ public:
 
     P get(T key);
 
+    void print(Node<T, P> *node);
+
 private:
     void balanceInsertion(Node<T, P> *node);
 

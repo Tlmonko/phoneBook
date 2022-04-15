@@ -1,10 +1,11 @@
 #include <stdexcept>
 #include "RedBlackTree.h"
+#include <iostream>
 
 template<typename T, typename P>
 void RedBlackTree<T, P>::add(T value, P payload) {
     if (!root) {
-        root = new Node<T, P>(false, value);
+        root = new Node<T, P>(false, value, payload);
         root->leftChild = new Node<T, P>(root);
         root->rightChild = new Node<T, P>(root);
         return;
@@ -272,4 +273,15 @@ P RedBlackTree<T, P>::get(T key) {
             node = node->leftChild;
     }
     return node->payload;
+}
+
+template<typename T, typename P>
+void RedBlackTree<T, P>::print(Node<T, P> *node) {
+    if (node->leftChild->leftChild)
+        print(node->leftChild);
+
+    std::cout << "Hash: " << node->value << std::endl << node->payload << std::endl;
+
+    if (node->rightChild->rightChild)
+        print(node->rightChild);
 }

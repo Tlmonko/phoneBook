@@ -1,4 +1,3 @@
-#include <iostream>
 #include <functional>
 #include "RedBlackTree.h"
 #include "RedBlackTree.cpp"
@@ -10,6 +9,13 @@ struct Contact {
     std::string phoneNumber;
     std::string email;
     std::string name;
+
+    friend std::ostream &operator<<(std::ostream &os, const Contact &contact) {
+        os << "Phone: " << contact.phoneNumber << std::endl;
+        os << "Email: " << contact.email << std::endl;
+        os << "Name: " << contact.name << std::endl;
+        return os;
+    }
 };
 
 struct ContactField {
@@ -36,6 +42,8 @@ public:
     void updateContact(ContactField key, ContactField updateField);
 
     Contact getContact(ContactField key);
+
+    void print();
 };
 
 

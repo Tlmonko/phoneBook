@@ -16,8 +16,8 @@ void phoneBook::addContact(Contact contact) {
     size_t hashedName = std::hash<std::string>{}(contact.name);
 
     phoneNumbersBook->add(hashedPhone, contact);
-    emailsBook->add(hashedPhone, contact);
-    namesBook->add(hashedPhone, contact);
+    emailsBook->add(hashedEmail, contact);
+    namesBook->add(hashedName, contact);
 }
 
 void phoneBook::removeContact(ContactField key) {
@@ -69,6 +69,10 @@ void phoneBook::updateContact(ContactField key, ContactField updateField) {
     }
 
     addContact(contact);
+}
+
+void phoneBook::print() {
+    phoneNumbersBook->print(phoneNumbersBook->root);
 }
 
 
